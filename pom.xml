@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>com.betterprojectsfaster</groupId>
 	<artifactId>native-java-all-thumbs-spring</artifactId>
-	<version>1.1</version>
+	<version>1.0.3</version>
 	<name>native-java-all-thumbs-spring</name>
 	<description>Demo project for Spring Boot</description>
 	<properties>
@@ -35,6 +35,11 @@
 			<groupId>commons-io</groupId>
 			<artifactId>commons-io</artifactId>
 			<version>2.11.0</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-lang3</artifactId>
+			<version>3.12.0</version>
 		</dependency>
 	</dependencies>
 
