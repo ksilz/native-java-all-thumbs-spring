@@ -5,9 +5,6 @@ import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.Image;
 import com.itextpdf.text.PageSize;
 import com.itextpdf.text.pdf.PdfWriter;
-import org.apache.commons.io.FilenameUtils;
-import org.apache.commons.lang3.SystemUtils;
-
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -15,8 +12,13 @@ import java.text.DecimalFormat;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
+import org.apache.commons.io.FilenameUtils;
+import org.apache.commons.lang3.SystemUtils;
 
 public class PdfCreator {
+
+  public static final int NUMBER_OF_RUNS = 5;
+
   void createPdfs() throws DocumentException {
     try {
       System.out.println(
@@ -65,31 +67,35 @@ public class PdfCreator {
           if (goOn) {
             System.out.println(
                 "Creating PDFs for " + pictureFiles.size() + " pictures in the 'pdf' directory...");
-            var counter = 1;
-            System.out.println();
             var start = System.currentTimeMillis();
 
-            for (var aFile : pictureFiles) {
-              System.out.print("\r  File " + counter);
-              var document = new Document(PageSize.LETTER);
-              var baseName = FilenameUtils.getBaseName(aFile.getName());
-              var pdfFile = new File(outputDir, baseName + ".pdf");
-              var pdfOutputStream = new FileOutputStream(pdfFile);
-              var writer = PdfWriter.getInstance(document, pdfOutputStream);
+            for (var i = 1; i <= NUMBER_OF_RUNS; i++) {
+              System.out.println();
+              System.out.println("Pass " + i + "/" + NUMBER_OF_RUNS);
+              var counter = 1;
 
-              writer.open();
-              document.open();
+              for (var aFile : pictureFiles) {
+                System.out.print("\r  File " + counter);
+                var document = new Document(PageSize.LETTER);
+                var baseName = FilenameUtils.getBaseName(aFile.getName());
+                var pdfFile = new File(outputDir, baseName + ".pdf");
+                var pdfOutputStream = new FileOutputStream(pdfFile);
+                var writer = PdfWriter.getInstance(document, pdfOutputStream);
 
-              var imagePath = aFile.toPath().toAbsolutePath().toString();
-              var image = Image.getInstance(imagePath);
+                writer.open();
+                document.open();
 
-              image.setAbsolutePosition(0, 0);
-              image.scaleToFit(PageSize.LETTER);
-              document.add(image);
+                var imagePath = aFile.toPath().toAbsolutePath().toString();
+                var image = Image.getInstance(imagePath);
 
-              document.close();
-              writer.close();
-              counter++;
+                image.setAbsolutePosition(0, 0);
+                image.scaleToFit(PageSize.LETTER);
+                document.add(image);
+
+                document.close();
+                writer.close();
+                counter++;
+              }
             }
 
             var stop = System.currentTimeMillis();
