@@ -8,6 +8,8 @@ import com.itextpdf.text.pdf.PdfWriter;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.lang.management.ManagementFactory;
+import java.lang.management.MemoryManagerMXBean;
 import java.text.DecimalFormat;
 import java.util.Arrays;
 import java.util.List;
@@ -31,6 +33,16 @@ public class PdfCreator {
               + SystemUtils.JAVA_VM_NAME
               + " "
               + SystemUtils.JAVA_VM_VERSION);
+      String garbageCollectors = "(???)";
+
+      var gcMxBeans = ManagementFactory.getGarbageCollectorMXBeans();
+
+      if (gcMxBeans != null && !gcMxBeans.isEmpty()) {
+        var names = gcMxBeans.stream().map(MemoryManagerMXBean::getName).toList();
+        garbageCollectors = String.join(", ", names);
+      }
+
+      System.out.println("Garbage collectors: " + garbageCollectors);
       System.out.println();
 
       var pid = ProcessHandle.current().pid();
