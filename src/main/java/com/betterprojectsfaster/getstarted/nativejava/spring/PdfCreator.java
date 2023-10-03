@@ -70,12 +70,8 @@ public class PdfCreator {
             var start = System.currentTimeMillis();
 
             for (var i = 1; i <= NUMBER_OF_RUNS; i++) {
-              System.out.println();
-              System.out.println("Pass " + i + "/" + NUMBER_OF_RUNS);
-              var counter = 1;
 
               for (var aFile : pictureFiles) {
-                System.out.print("\r  File " + counter);
                 var document = new Document(PageSize.LETTER);
                 var baseName = FilenameUtils.getBaseName(aFile.getName());
                 var pdfFile = new File(outputDir, baseName + ".pdf");
@@ -94,7 +90,6 @@ public class PdfCreator {
 
                 document.close();
                 writer.close();
-                counter++;
               }
             }
 
@@ -103,7 +98,6 @@ public class PdfCreator {
 
             var formatter = new DecimalFormat("###,###.##");
             var formattedDuration = formatter.format(duration);
-            System.out.println();
             System.out.println();
             System.out.println("Done creating PDFs in " + formattedDuration + " seconds. ");
             System.out.println();
