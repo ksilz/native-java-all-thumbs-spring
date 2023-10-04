@@ -27,7 +27,7 @@ public class PdfCreator {
           "This program will convert all JPG, PNG, and GIF pictures in the current directory into PDF.");
       System.out.println();
       System.out.println(
-          "JVM: "
+          "JVM:                "
               + SystemUtils.JAVA_VM_VENDOR
               + " "
               + SystemUtils.JAVA_VM_NAME
