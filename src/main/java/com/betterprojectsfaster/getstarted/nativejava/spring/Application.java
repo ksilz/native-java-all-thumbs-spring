@@ -14,9 +14,9 @@ public class Application implements CommandLineRunner {
   @Override
   public void run(String... args) throws Exception {
     System.out.println();
-    System.out.println("**************************************");
-    System.out.println("*   ALL THUMBS SPRING BOOT 3 1.1.3   *");
-    System.out.println("**************************************");
+    System.out.println("**********************************");
+    System.out.println("*   ALL THUMBS SPRING BOOT 2.0   *");
+    System.out.println("**********************************");
     System.out.println();
 
     var creator = new PdfCreator();

@@ -47,7 +47,6 @@ public class PdfCreator {
 
       var pid = ProcessHandle.current().pid();
       System.out.println("My process ID: " + pid);
-      waitForInput("Press ENTER to START");
 
       var inputDir = new File(".");
       var files = inputDir.listFiles();
@@ -81,8 +80,8 @@ public class PdfCreator {
                 "Creating PDFs for " + pictureFiles.size() + " pictures in the 'pdf' directory...");
             var start = System.currentTimeMillis();
 
-            for (var i = 1; i <= NUMBER_OF_RUNS; i++) {
-
+            for (var run = 1; run <= NUMBER_OF_RUNS; run++) {
+              System.out.println("Starting run " + run + " of " + NUMBER_OF_RUNS);
               for (var aFile : pictureFiles) {
                 var document = new Document(PageSize.LETTER);
                 var baseName = FilenameUtils.getBaseName(aFile.getName());
@@ -113,17 +112,6 @@ public class PdfCreator {
             System.out.println();
             System.out.println("Done creating PDFs in " + formattedDuration + " seconds. ");
             System.out.println();
-            waitForInput("Press ENTER for garbage collection");
-            System.out.println("Now sleeping for 10 seconds, hoping for garbage collection.");
-            System.gc();
-
-            try {
-              Thread.sleep(10_000);
-            } catch (InterruptedException e) {
-              // ignore
-            }
-
-            System.out.println("Woke up from sleep. ");
           }
         } else {
           System.err.println("ERROR: No picture files found in current directory!");
@@ -133,7 +121,6 @@ public class PdfCreator {
         System.err.println("ERROR: No files found in current directory");
       }
 
-      waitForInput("Press ENTER to STOP");
     } catch (IOException e) {
       System.err.println("ERROR: Fatal error calculating thumbnails!");
       e.printStackTrace();
@@ -141,9 +128,4 @@ public class PdfCreator {
     }
   }
 
-  void waitForInput(String message) {
-    System.out.println();
-    System.out.println(message);
-    new Scanner(System.in).nextLine();
-  }
 }
